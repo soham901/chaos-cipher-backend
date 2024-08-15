@@ -41,7 +41,8 @@ public class EncryptionService {
         Random random = new Random();
 
         for (char c : characters.toCharArray()) {
-            map.put(Character.toString(c), generateRandomCode(random.nextInt(mincodeLength, maxcodeLength)));
+            map.put(Character.toString(c), generateRandomCode(
+                    mincodeLength + random.nextInt(maxcodeLength - mincodeLength + 1)));
         }
         return map;
     }

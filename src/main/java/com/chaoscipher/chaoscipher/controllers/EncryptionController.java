@@ -1,25 +1,32 @@
 package com.chaoscipher.chaoscipher.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chaoscipher.chaoscipher.dto.EncryptionRequest;
+import com.chaoscipher.chaoscipher.dto.EncryptionResponse;
 import com.chaoscipher.chaoscipher.services.EncryptionService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class EncryptionController {
     @Autowired
     private EncryptionService encryptionService;
 
-    @GetMapping(path = "/encrypt")
-    public String encryptPlainText(@RequestParam("data") String data) {
-        String fakeCipher = encryptionService.encryptPlainText(data);
-        return fakeCipher;
+    @PostMapping(path = "/encrypt")
+    public EncryptionResponse encryptPlainText(@RequestBody EncryptionRequest encryptionRequest) {
+        String data = encryptionRequest.getData();
+        String cipherText = encryptionService.encryptPlainText(data);
+        return new EncryptionResponse(cipherText);
     }
 
-    @GetMapping(path = "/decrypt")
-    public String decryptPlainText(@RequestParam("data") String data) {
-        return encryptionService.decryptPlainText(data);
+    @PostMapping(path = "/decrypt")
+    public EncryptionResponse decryptPlainText(@RequestBody EncryptionRequest encryptionRequest) {
+        String data = encryptionRequest.getData();
+        String plainText = encryptionService.decryptPlainText(data);
+        return new EncryptionResponse(plainText);
     }
 }
