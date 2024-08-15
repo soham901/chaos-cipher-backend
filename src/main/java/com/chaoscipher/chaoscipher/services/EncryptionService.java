@@ -12,8 +12,8 @@ import com.chaoscipher.chaoscipher.repositories.EncryptionRepository;
 public class EncryptionService {
     private final EncryptionRepository encryptionRepository;
 
-    private final int mincodeLength = 3;
-    private final int maxcodeLength = 10;
+    private final int mincodeLength = 2;
+    private final int maxcodeLength = 4;
 
     public EncryptionService(EncryptionRepository encryptionRepository) {
         this.encryptionRepository = encryptionRepository;
